@@ -1,18 +1,24 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Stock trading backend",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "nodemon index.js",
+  "author": "Arif Reja",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
-    "dotenv": "^17.3.1"
+    "dotenv": "^17.3.1",
+    "express": "^4.21.2",
+    "mongoose": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
