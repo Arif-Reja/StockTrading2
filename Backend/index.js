@@ -5,7 +5,7 @@ const cors = require("cors");
 const { HoldingModel } = require("./models/HoldingModel"); 
 const { PositionsModel } = require("./models/PositionsModel");
 const { OrdersModel } = require("./models/OrdersModel"); 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const app = express();
 app.use(express.json());
