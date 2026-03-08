@@ -13,7 +13,7 @@ const SellActionWindow = ({ uid }) => {
      console.log("SELL BUTTON CLICKED");
     try {
       const response = await axios.post(
-        "http://localhost:3001/sellStock",
+        "http://localhost:3002/sellStock",
         {
           name: uid,
           qty: Number(stockQuantity),
