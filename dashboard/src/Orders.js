@@ -11,7 +11,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/allOrders");
+      const res = await axios.get("http://localhost:3002/allOrders");
       setOrders(res.data);
     } catch (err) {
       console.error(err);
