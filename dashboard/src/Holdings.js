@@ -7,7 +7,7 @@ const Holdings = () => {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    axios.get("http://localhost:3001/allHoldings")
+    axios.get("http://localhost:3002/allHoldings")
       .then((res) => {
         setAllHoldings(res.data);
         setLoading(false);
