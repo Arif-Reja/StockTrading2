@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import GeneralContext from "./GeneralContext";
-import "./BuyActionWindow.css";
+import "./SellActionWindow.css";
 
 const SellActionWindow = ({ uid }) => {
   const { closeSellWindow } = useContext(GeneralContext);
@@ -10,6 +10,7 @@ const SellActionWindow = ({ uid }) => {
   const [stockPrice, setStockPrice] = useState(0);
 
   const handleSellClick = async () => {
+     console.log("SELL BUTTON CLICKED");
     try {
       const response = await axios.post(
         "http://localhost:3001/sellStock",
@@ -69,15 +70,22 @@ const SellActionWindow = ({ uid }) => {
         <span>
           Value ₹{(stockQuantity * stockPrice).toFixed(2)}
         </span>
+              <div>
+        <button
+  type="button"
+  className="btn btn-red"
+  onClick={handleSellClick}
+>
+  Sell
+</button>
 
-        <div>
-          <button className="btn btn-red" onClick={handleSellClick}>
-            Sell
-          </button>
-
-          <button className="btn btn-grey" onClick={handleCancelClick}>
-            Cancel
-          </button>
+<button
+  type="button"
+  className="btn btn-grey"
+  onClick={handleCancelClick}
+>
+  Cancel
+</button>
         </div>
       </div>
     </div>

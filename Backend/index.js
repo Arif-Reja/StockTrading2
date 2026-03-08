@@ -2,15 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 const { HoldingModel } = require("./models/HoldingModel"); 
 const { PositionsModel } = require("./models/PositionsModel");
 const { OrdersModel } = require("./models/OrdersModel"); 
 const PORT = process.env.PORT || 3001;
 const uri = process.env.MONGO_URL;
-
 const app = express();
-
 app.use(express.json());
 app.use(cors());
 
@@ -143,7 +140,6 @@ app.post("/cancelOrder", async (req, res) => {
     res.status(500).json({ error: "Error cancelling order" });
   }
 });
-// ================= SELL STOCK =================
 app.post("/sellStock", async (req, res) => {
   try {
     const name = req.body.name;
@@ -162,7 +158,6 @@ app.post("/sellStock", async (req, res) => {
       return res.status(400).json({ error: "Not enough quantity to sell" });
     }
 
-    // Reduce quantity
     existingHolding.qty -= qty;
 
     if (existingHolding.qty === 0) {
@@ -170,8 +165,6 @@ app.post("/sellStock", async (req, res) => {
     } else {
       await existingHolding.save();
     }
-
-    // Save SELL order
     await OrdersModel.create({
       name,
       qty,
@@ -186,7 +179,6 @@ app.post("/sellStock", async (req, res) => {
     res.status(500).json({ error: "Sell failed" });
   }
 });
-// ---------------- DB CONNECT ----------------
 mongoose.set("strictQuery", false);
 mongoose.connect(uri)
     .then(() => {
