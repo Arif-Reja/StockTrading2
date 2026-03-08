@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/.env" });
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -10,7 +10,6 @@ const uri = process.env.MONGO_URL;
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 app.post("/holdings", async (req, res) => {
     try {
         const tempHoldings = req.body.length > 0 ? req.body : [
@@ -35,8 +34,6 @@ app.get("/allHoldings", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch holdings", details: err.message });
     }
 });
-
-// ---------------- POSITIONS ----------------
 app.post("/positions", async (req, res) => {
     try {
         const tempPositions = req.body.length > 0 ? req.body : [
@@ -58,55 +55,6 @@ app.get("/allPositions", async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch positions", details: err.message });
     }
-});
-
-// ---------------- ORDERS ----------------
-app.post("/newOrder", async (req, res) => {
-  try {
-    const { name, qty, price, mode } = req.body;
-
-    // 1️⃣ Save order
-    const newOrder = new OrdersModel({
-      name,
-      qty,
-      price,
-      mode,
-    });
-
-    await newOrder.save();
-
-    // 2️⃣ Update Holdings ONLY if BUY
-    if (mode === "BUY") {
-
-      const existingHolding = await HoldingModel.findOne({ name });
-
-      if (existingHolding) {
-        // If stock already exists → increase quantity
-        existingHolding.qty += qty;
-        existingHolding.avg = price; // simplified avg logic
-        await existingHolding.save();
-
-      } else {
-        // If new stock → create holding
-        const newHolding = new HoldingModel({
-          name,
-          qty,
-          avg: price,
-          price,
-          net: "0%",
-          day: "0%",
-        });
-
-        await newHolding.save();
-      }
-    }
-
-    res.status(201).json({ message: "Order executed & holdings updated" });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Order failed" });
-  }
 });
 app.get("/orders", async (req, res) => {
   try {
